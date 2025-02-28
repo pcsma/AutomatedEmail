@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { ToastContainer ,toast } from 'react-toastify'
 
@@ -6,17 +6,17 @@ const Contact = () => {
     const form = useRef();
     const notify = () => toast.success("Message sent sucessfully!",{
       position: "top-right",
-autoClose: 2000,
-hideProgressBar: false,
-closeOnClick: true,
-pauseOnHover: true,
-draggable: true,
-progress: undefined,
-theme: "light",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
     })
-
   const sendEmail = (e) => {
     e.preventDefault();
+    
 
     emailjs
       .sendForm('service_mqo19na', 'template_0szr4kq', form.current, {
@@ -26,25 +26,28 @@ theme: "light",
         () => {
           console.log('SUCCESS!');
           notify('')
+          document.getElementById("formID").reset();
         },
         (error) => {
           console.log('FAILED...', error.text);
         },
       );
+      
+    
   };
   return (
-    <div className="h-screen flex justify-center items-center">
-      <section className="flex justify-center items-center mx-6 h-full w-full lg:min-h-10 lg:w-1/2">
-        <form className="bg-[#2a368b] text-white max-w-lg w-full p-[25px] rounded-2xl" ref={form} onSubmit={sendEmail}>
+    <div className="h-screen w-screen flex justify-center items-center">
+      <section className="flex justify-center items-center mx-6 h-full w-full md:w-full md:mx-1 lg:min-h-10 lg:w-1/2">
+        <form className="bg-[#2a368b] text-white max-w-lg w-full p-[25px] rounded-2xl" id='formID' ref={form} onSubmit={sendEmail}>
             <div className="flex flex-col">
-                <h2 className="flex items-center justify-center text-3xl">Contact</h2>
+                <h2 className="flex items-center justify-center text-3xl">Report to ITRO</h2>
                 <div className="flex flex-col mb-6">
                     <label>Name </label>
                     <input className="h-10 border-inherit w-full text-black rounded p-1 mt-2" type="text" placeholder="Enter your name" name='sender_name' required />
                 </div>
                 <div className="flex flex-col mb-6">
                     <label>E-mail </label>
-                    <input className="h-10 border-inherit w-full text-black rounded p-1 mt-2" type="text" placeholder="Enter your e-mail" name='sender_mail' required />
+                    <input className="h-10 border-inherit w-full text-black rounded p-1 mt-2" type="email" placeholder="Enter your e-mail" name='sender_mail' required />
                 </div>
                 <div className="flex flex-col mb-6">
                     <label>Concern </label>
